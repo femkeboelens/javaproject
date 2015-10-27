@@ -3,6 +3,8 @@ package model;
 import java.util.Date;
 import java.util.TreeSet;
 
+import util.Util;
+
 public class Student {
 	private String lastName;
 	private String firstName;
@@ -10,6 +12,11 @@ public class Student {
 	private Date dateOfBirth;
 	private Gender gender;
 	private TreeSet<LateMoment> lateMoments;
+	public Student(String ln, String fn, String pf) {
+		lastName = ln;
+		firstName = fn;
+		prefix = pf;
+	}
 	/**
 	 * @return the lastName
 	 */
@@ -81,5 +88,14 @@ public class Student {
 			return;
 		}
 		lateMoments.add(lm);
+	}
+	public void addLateMoment(String description, TypeOfLate type) {
+		if(Util.compareDate(new Date(), 8, 15)) {
+			return;
+		}
+		addLateMoment(new LateMoment(this, description, type, new Date()));
+		if(lateMoments.size() == 5) {
+			
+		}
 	}
 }
