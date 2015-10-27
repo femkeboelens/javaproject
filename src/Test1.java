@@ -9,7 +9,7 @@ public class Test1 {
 		} else if (tijdBinnenkomst < 9.05) {
 			log("Te laat");
 		} else {
-			log("Niet aanwezig");
+			log("Nt aanwezig");
 		}
 		Date date = new Date(2015,10,27,9,14,0);
 		if (date.getHours() >= 9 && date.getMinutes() > 15) {
