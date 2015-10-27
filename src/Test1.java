@@ -11,7 +11,7 @@ public class Test1 {
 		if (date.getHours() >= 9 && date.getMinutes() > 15) {
 			log("oeps");
 		}
-		
+		System.out.println("bla");
 		
 	
 	}
