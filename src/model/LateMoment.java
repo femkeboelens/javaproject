@@ -1,7 +1,11 @@
 package model;
 
 import java.util.Date;
-
+/**
+ * hay
+ * @author femkeboelens
+ *
+ */
 public class LateMoment implements Comparable<LateMoment> {
 	private Date date;
 	private String description;
