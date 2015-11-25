@@ -1,17 +1,37 @@
 package model;
 
+import java.util.Calendar;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.TreeSet;
 
-import util.Util;
+import javax.swing.JOptionPane;
 
+import util.Util;
+/**
+ * Een class om een leerling in te stoppen :D
+ * @author Laptop
+ *
+ */
 public class Student {
-	private String lastName;
-	private String firstName;
-	private String prefix;
-	private Date dateOfBirth;
-	private Gender gender;
-	private TreeSet<LateMoment> lateMoments;
+	private String lastName;//achternaam
+	private String firstName;//voornaam
+	private String prefix;//tussenvoegsel
+	private Date dateOfBirth;//geboortedatum
+	private Gender gender;//geslacht
+	/**
+	 * we gebruiken TreeSet omdat deze de lijst automatisch sorteert
+	 * dit is de reden waarom we Comparable in LateMoment implementeren.
+	 * als we dit niet hadden gedaan wist de TreeSet niet hoe hij deze moest sorteren
+	 */
+	private TreeSet<LateMoment> lateMoments = new TreeSet<LateMoment>();//een GESORTEERDE lijst met te-laat-momentjes
+	/**
+	 * Maak een nieuwe leerling aan
+	 * @param ln achternaam
+	 * @param fn voornaam
+	 * @param pf tussenvoegsel
+	 */
 	public Student(String ln, String fn, String pf) {
 		lastName = ln;
 		firstName = fn;
@@ -83,19 +103,28 @@ public class Student {
 	public TreeSet<LateMoment> getLateMoments() {
 		return lateMoments;
 	}
-	public void addLateMoment(LateMoment lm) {
+	public Set<LateMoment> getUnalowedLateMoments() {
+		Set<LateMoment> result = new HashSet<LateMoment>();
+		for(LateMoment lm : lateMoments) {
+			if(lm.getType() == TypeOfLate.UNALOWED) {
+				result.add(lm);
+			}
+		}
+		return result;
+	}
+	private void addLateMoment(LateMoment lm) {
 		if(lm.getStudent() != this) {
 			return;
 		}
 		lateMoments.add(lm);
 	}
 	public void addLateMoment(String description, TypeOfLate type) {
-		if(Util.compareDate(new Date(), 8, 15)) {
+		if(Util.compareDate(Calendar.getInstance(), 8, 15)) {
 			return;
 		}
-		addLateMoment(new LateMoment(this, description, type, new Date()));
-		if(lateMoments.size() == 5) {
-			
+		addLateMoment(new LateMoment(this, description, type, Calendar.getInstance()));
+		if(getUnalowedLateMoments().size() == 5) {
+			JOptionPane.showMessageDialog(null, "Deze leerling moet dringend gestraft worden!");
 		}
 	}
 }

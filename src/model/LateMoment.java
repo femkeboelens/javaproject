@@ -1,17 +1,28 @@
 package model;
 
-import java.util.Date;
+import java.util.Calendar;
 /**
- * hay
+ * Deze class is voor te-laat-momentjes.
  * @author femkeboelens
  *
  */
+								   // we implementeren hier comparable(een interface)
+								   // met comparable kunnen we een lijst met te-laat-momentjes op een
+								   // speciale manier sorteren
 public class LateMoment implements Comparable<LateMoment> {
-	private Date date;
-	private String description;
-	private TypeOfLate type;
-	private final Student student;
-	public LateMoment(Student s, String de, TypeOfLate t, Date da) {
+	private Calendar date;//hierin staat de datum/tijd
+	private String description;//Hierin kun je bijzonderheden van het te-laat-momentje in zetten. 
+	private TypeOfLate type;//hierin kun je een type aangeven.
+	private final Student student;//het belangrijkste: de leerling waar het om gaat
+	/**
+	 * Maak een nieuw te-late-momentje aan.
+	 * Dit moet gebeuren wanneer de leerling (te laat) aankomt
+	 * @param s de leerling
+	 * @param de bijzonderheden
+	 * @param t type(geoorloofd of ongeoorloofd)
+	 * @param da datum/tijd
+	 */
+	public LateMoment(Student s, String de, TypeOfLate t, Calendar da) {
 		setDate(da);
 		setDescription(de);
 		student = s;
@@ -20,14 +31,14 @@ public class LateMoment implements Comparable<LateMoment> {
 	/**
 	 * @return the date
 	 */
-	public Date getDate() {
+	public Calendar getDate() {
 		return date;
 	}
 	/**
 	 * @param date the date to set
 	 */
-	public void setDate(Date d) {
-		if(d == null) {
+	public void setDate(Calendar d) {
+		if(d == null) {//controlleer of we wel een geldige datum hebben
 			return;
 		}
 		date = d;
@@ -62,8 +73,12 @@ public class LateMoment implements Comparable<LateMoment> {
 	public Student getStudent() {
 		return student;
 	}
+	// om comparable te laten werken moeten we de volgende method implementeren
+	// in compareTo gaan we het huidige object waar we in zitten vergelijken met een gegeven object
+	// het gegeven object heet in dit geval o
 	@Override
 	public int compareTo(LateMoment o) {
+		// we willen sorteren op datum. Dus vergelijken we de datums met elkaar
 		return date.compareTo(o.getDate());
 	}
 }
